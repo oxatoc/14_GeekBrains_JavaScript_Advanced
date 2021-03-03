@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 768px;
+  margin: 0 auto;
+}
+
+.cart-button {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  margin: 0.5rem;
+}
+
+.cart-button:focus {
+  outline: none;
+  -webkit-box-shadow: 0 0 0 3px #ccc;
+          box-shadow: 0 0 0 3px #ccc;
+}
+
+.cart-button:hover {
+  color: white;
+  background-color: #aaa;
+}
+
+.goods-item {
+  width: 160px;
+  height: 200px;
+  border: 1px solid #ccc;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  text-align: center;
+  color: #666;
+  margin: 1rem;
+}
+
+.goods-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 1rem 0;
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+/*# sourceMappingURL=app.css.map */
