@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson4</title>
+</head>
+
+<body>
+
+
+<script>
+
+    /* Задание 1 - замена одинарных кавычек на двойные */
+    text = `How to stop spam texts: 8 do' and don'ts.
+    They're about as welcome as robot calls and junk mail — spam text messages.
+    That's aggravating enough, but it gets worse.
+    Most spam text messages aren't coming from another phone.
+    They're often originating from a computer.`;
+
+    correctedText = text.replace(/'/g, '\"');
+    console.log(correctedText);
+
+    /* Задание 2 - исключение замены кавычек в слове aren't */
+    correctedText = text.replace(/'(?!t)/g, '\"');
+    console.log(correctedText);
+
+
+</script>
+</body>
+
+</html>
