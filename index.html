@@ -11,60 +11,55 @@
 
 <body>
 
-    <div id="app">
-        <header>
-            Поиск:
-            <input id="search" v-model="searchLine" @input="filterGoods">
-            <button class="cart-button" type="button" @click="openCartHandler">
-                Корзина {{cart.length}}
-            </button>
-        </header>
-        <main>
+<div id="app">
+    <header>
+        Поиск:
+        <search-component @search_event="searchHandler">
+        </search-component>
+    </header>
+    <main>
+        <server-error-component
+            :error_message="error_message"
+        >
+        </server-error-component>
 
-            <div class="goods-list">
-                <div v-if="filteredGoods.length == 0">Нет данных</div>
-                <div class="goods-item"
-                     v-for="(good, index) in filteredGoods"
-                >
-                    <div class="goods-item-flex">
-                        <div class="goods-item-banner"></div>
-                        <h3>{{good.product_name}}</h3>
-                        <p>{{good.price}}</p>
-                    </div>
-                    <div>
-                        <button type="button" class="goods-item-button" @click="addToCart(index)">Добавить</button>
-                    </div>
+        <div class="goods-list" @click="addToCartHandler">
+            <div v-if="filteredGoods.length == 0">Нет данных</div>
+            <div class="goods-item"
+                 v-for="good in filteredGoods"
+            >
+                <div class="goods-item-flex">
+                    <div class="goods-item-banner"></div>
+                    <h3>{{good.product_name}}</h3>
+                    <p>{{good.price}}</p>
+                </div>
+                <div>
+                    <button :data-id_product="good.id_product" type="button" class="goods-item-button">Добавить</button>
                 </div>
             </div>
-            <div v-if="isVisibleChart">
-                <div>Корзина</div>
-                <table class="excel-table">
-                    <thead>
+        </div>
+
+        <cart-component>
+            <table class="excel-table">
+                <tr>
                     <th class="excel-table-th excel-table-header-good">Товар</th>
                     <th class="excel-table-th excel-table-header-price">Цена</th>
                     <th class="excel-table-th excel-table-remove"></th>
-                    </thead>
-                    <tbody class="excel-table-body">
-                    <tr class="good-item"
-                        v-for="(good, index) in cart"
-                    >
-                        <td class="excel-table-td">{{good.product_name}}</td>
-                        <td class="excel-table-td excel-table-price">{{good.price}}</td>
-                        <td class="excel-table-td excel-table-remove">
-                            <button class="remove-button"
-                                    type="button"
-                                    @click="removeFromCart(index)">Удалить
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
+                </tr>
+                <tr is="cart-item-component"
+                    v-for="(good, index) in cart"
+                    :good="good"
+                    :index = "index"
+                    @remove="removeFromCartHandler">
+                </tr>
+            </table>
+        </cart-component>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="js/app.js"></script>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="js/app.js"></script>
 </body>
 
 </html>
