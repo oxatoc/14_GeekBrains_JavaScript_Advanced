@@ -42,7 +42,7 @@ Vue.component('cart-item-component', {
     `
     , props: ['good', 'index']
     , methods: {
-        remove_item(event){
+        remove_item(event) {
             this.$emit('remove', event.target.dataset.index);
         }
     }
@@ -83,25 +83,73 @@ new Vue({
         , error_message: ''
     }
     , mounted() {
-        this.fetchPromise();
+        /* Наполнение каталога продуктов */
+        this.fetchGet(this.goodsRouteGet)
+            .then(data => {
+                /* В случае успешного получения данных с сервера - очищаем сообщение об ошибке */
+                this.error_message = '';
+
+                this.goods = JSON.parse(data);
+                this.filteredGoods = this.goods;
+            })
+            .catch(error => {
+
+                if (error == 'stop xhr') {
+                    /* локальные тестовые данные */
+                    this.goods = [
+                        {product_name: 'Shirt', price: 150, id_product: 1},
+                        {product_name: 'Socks', price: 50, id_product: 2},
+                        {product_name: 'Jacket', price: 350, id_product: 3},
+                        {product_name: 'Shoes', price: 250, id_product: 4},
+                    ];
+
+                    /* Тест пустого списка товаров */
+                    //this.goods = [];
+
+                    this.filteredGoods = this.goods;
+                    return;
+                }
+
+                /* Отображение компонента с сообщением об ошибке обращения к серверу */
+                this.error_message = error.message;
+
+            });
+        /* Наполнение корзины */
+        this.fetchGet(this.cartRouteGet)
+            .then(data => this.cart = JSON.parse(data))
+            .catch(error => console.log(error));
+    }
+    , computed: {
+        goodsRouteGet() {
+            return '/data';
+        }
+        , cartRoutePost() {
+            return '/cart';
+        }
+        , cartRouteGet() {
+            return '/cart';
+        }
+        , cartRouteRemodePost() {
+            return '/removegood';
+        }
     }
     , methods: {
         addToCartHandler(e) {
             const id_product = e.target.dataset.id_product
-            if (id_product !== undefined){
-                const good = this.goods.find( item => item.id_product == id_product);
-                this.cart.push(good);
+            if (id_product !== undefined) {
+                const good = this.goods.find(item => item.id_product == id_product);
+
+                this.fetchPost(this.cartRoutePost, good)
+                    .then(data => {
+                        this.cart = JSON.parse(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
         }
-        , fetchPromise() {
-            const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
-            const url = `${API_URL}/catalogData.json`;
-
+        , fetchGet(url) {
             return new Promise((resolve) => {
-
-                /* Исключение для отладки - вместо выгрузки данных с сервера -
-                * наполняем массив товаров из обработчика исключений .catch()*/
-                throw "stop xhr";
 
                 let xhr;
                 if (window.XMLHttpRequest) {
@@ -117,47 +165,37 @@ new Vue({
                 }
                 xhr.open('GET', url, true);
                 xhr.send();
-            }).then(data => {
-                /* В случае успешного получения данных с сервера - очищаем сообщение об ошибке */
-                this.error_message = '';
+            });
+        }
+        , fetchPost(url, obj) {
 
-                this.goods = JSON.parse(data);
-                this.filteredGoods = this.goods;
-            })
-                .catch(error => {
+            return new Promise((resolve) => {
 
-                    if (error == 'stop xhr'){
-                        /* локальные тестовые данные */
-                        this.goods = [
-                            {product_name: 'Shirt', price: 150, id_product: 1},
-                            {product_name: 'Socks', price: 50, id_product: 2},
-                            {product_name: 'Jacket', price: 350, id_product: 3},
-                            {product_name: 'Shoes', price: 250, id_product: 4},
-                        ];
-
-                        /* Тест пустого списка товаров */
-                        //this.goods = [];
-
-                        this.filteredGoods = this.goods;
-                        return;
+                let xhr;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xhr.onreadystatechange = function () {
+                    /* state = 4 - запрос выполнен */
+                    if (xhr.readyState === 4) {
+                        resolve(xhr.responseText);
                     }
+                }
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                xhr.send(JSON.stringify(obj));
+            });
 
-                    /* Отображение компонента с сообщением об ошибке обращения к серверу */
-                    this.error_message = error.message;
-
-                });
         }
         , openCartHandler() {
             this.isVisibleChart = !this.isVisibleChart;
         }
         , removeFromCartHandler(index) {
-            console.log(index);
-            // const id_product = e.target.dataset.id_product
-            // if (id_product !== undefined){
-            //     const goodIndex = this.cart.findIndex( item => item.id_product == id_product);
-            //     this.cart.splice(goodIndex, 1);
-            // }
-            this.cart.splice(index, 1);
+            this.fetchPost(this.cartRouteRemodePost, {index: index})
+                .then(data => this.cart = JSON.parse(data))
+                .catch(error => console.log(error));
         }
         , searchHandler(searchLine) {
             if (searchLine === '') {
