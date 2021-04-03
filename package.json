@@ -1,0 +1,29 @@
+{
+  "name": "geekbrains_javascript_advanced",
+  "version": "1.0.0",
+  "description": "Домашние задания курса \"Продвинутый курс Javascript\" портала GeekBrains",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "webpack",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxatoc/14_GeekBrains_JavaScript_Advanced.git"
+  },
+  "keywords": [
+    "lessons"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oxatoc/14_GeekBrains_JavaScript_Advanced/issues"
+  },
+  "homepage": "https://github.com/oxatoc/14_GeekBrains_JavaScript_Advanced#readme"
+}
