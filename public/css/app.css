@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+body {
+  padding: 1rem;
+}
+
+.alert {
+  color: chocolate;
+}
+
+.cart-button {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid #ccc;
+  margin: 1rem 1rem 1rem auto;
+}
+.cart-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ccc;
+}
+.cart-button:hover {
+  color: white;
+  background-color: #aaa;
+}
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.excel-table {
+  border-collapse: collapse;
+}
+.excel-table-td, .excel-table-th {
+  border: 1px solid #ccc;
+  padding: 0.1rem 0.25rem;
+}
+.excel-table-header-good {
+  min-width: 5rem;
+}
+.excel-table-header-price {
+  min-width: 5rem;
+}
+.excel-table-price {
+  text-align: right;
+}
+.excel-table-remove {
+  min-width: 5rem;
+  text-align: center;
+}
+
+.goods-item {
+  width: 160px;
+  height: 200px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center;
+  color: #666;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.goods-item-banner {
+  height: 50%;
+  border: 1px solid #ccc;
+}
+.goods-item-button {
+  border-radius: 0.75rem;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  float: right;
+}
+.goods-item-button:focus {
+  box-shadow: 0 0 0 2px #ccc;
+  outline: none;
+}
+.goods-item-button:hover {
+  color: white;
+  background-color: #999;
+}
+.goods-item-flex {
+  flex-grow: 1;
+}
+
+.goods-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.remove-button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+.remove-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #ccc;
+}
+.remove-button:hover {
+  color: white;
+  background-color: #aaa;
+}
+
+/*# sourceMappingURL=app.css.map */
